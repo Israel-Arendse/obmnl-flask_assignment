@@ -13,7 +13,7 @@ transactions = [
 
 # Read operation: Display all transactions
 @app.route("/")
-def get_transactions:
+def get_transactions():
     return render_template("transactions.html", transactions=transactions)
 
 # Create operation
