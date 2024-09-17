@@ -37,7 +37,19 @@ def add_transaction():
     # If the request method is GET, render the form template to display the add transaction form
     return render_template("form.html")
 
-# Update operation
+# Update operation: Display edit transaction form
+# Route to handle the editing of an existing transaction
+@app.route("/edit/<:transaction_id>", methods=["GET", "POST"])
+def edit_transaction(transaction_id):
+    # Check if the request method is POST (form submission)
+    if request.method == 'POST':
+        # Extract the updated values from the form fields
+        date = request.form['date']            # Get the 'date' field value from the form
+        amount = float(request.form['amount']) # Get the 'amount' field value from the form and convert it to a float
+
+
+
+
 
 # Delete operation
 
