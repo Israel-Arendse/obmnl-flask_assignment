@@ -74,7 +74,7 @@ def delete_transaction(transaction_id):
     # Find the transaction with the matching ID and remove it form the list
     for transaction in transactions:
         if transaction['id'] == transaction_id:
-            transactions.rmove(transaction) # Delete the transaction from the transactions list
+            transactions.remove(transaction) # Delete the transaction from the transactions list
             break # Exit the loop once the transaction is found and remove.
 
     # Redirect to the transactions list page after deleting the transaction
