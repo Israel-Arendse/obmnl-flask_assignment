@@ -63,6 +63,9 @@ def edit_transaction(transaction_id):
             # Render the edit form template and pass the transaction to be edited
             return render_template("edit.hmtl", transaction=transaction)
 
+    # If the transaction with the specifed ID is not found, hanlde this case
+    return {"mesage": "Transaction not found"}, 404
+
 
 # Delete operation
 
