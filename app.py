@@ -39,7 +39,7 @@ def add_transaction():
 
 # Update operation: Display edit transaction form
 # Route to handle the editing of an existing transaction
-@app.route("/edit/<:transaction_id>", methods=["GET", "POST"])
+@app.route("/edit/<int:transaction_id>", methods=["GET", "POST"])
 def edit_transaction(transaction_id):
     # Check if the request method is POST (form submission)
     if request.method == 'POST':
