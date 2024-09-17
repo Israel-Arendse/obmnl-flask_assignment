@@ -56,7 +56,12 @@ def edit_transaction(transaction_id):
 
         # Redirect to the transactions list page after updating the transaction
         return redirect(url_for("get_transactions"))
-
+    
+    # If the request method is GET, find the transaction with the matching ID and render the edit form
+    for transaction in transactions:
+        if transaction['id'] == transaction_id:
+            # Render the edit form template and pass the transaction to be edited
+            return render_template("edit.hmtl", transaction=transaction)
 
 
 # Delete operation
