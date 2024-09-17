@@ -22,17 +22,26 @@ def get_transactions():
 def add_transaction():
     # Check if the request method is POST (form submission)
     if request.method == 'POST':
-        # Create a new transaction object using form field values
-        transaction = {
-            'id': len(transactions) + 1,            # Generate a new ID based on the current lenght of the transactions list
-            'date': request.form['date'],           # Get the 'date' field value from the form
-            'amount': float(request.form['amount']) # Get the 'amount' field value from the form and convert it to a float
-        }
+        try: 
+            # Extract the updated values from the form fields
+            date = request.form['date'] # Get the 'date' field value from the form
+            amount = float(request.form['amount']) # Get the 'amount' field value from the form and convert it to a float
+
+            # Create a new transaction object using form field values
+            transaction = {
+               'id': len(transactions) + 1,   # Generate a new ID based on the current lenght of the transactions list
+               'date': date,                  # Get the 'date' field value from the form
+               'amount': int(amount)          # Get the 'amount' field value from the form and convert it to a float
+
+            }
+
         # Append the new transaction to the transactions list
         transactions.append(transaction)
 
         # Redirect to the transactions list page after adding the new transaction
         return redirect(url_for("get_transactions"))
+    except ValueError:
+        return "Please enter valid numeric values for both 'Date' and 'Amount'."
 
     # If the request method is GET, render the form template to display the add transaction form
     return render_template("form.html")
