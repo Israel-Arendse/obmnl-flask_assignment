@@ -54,6 +54,8 @@ def edit_transaction(transaction_id):
                 transaction['amount'] = amount  # Update the 'amount' field of the transaction
                 break                           # Exit the loop once the transaction is found and updated
 
+        # Redirect to the transactions list page after updating the transaction
+        return redirect(url_for("get_transactions"))
 
 
 
