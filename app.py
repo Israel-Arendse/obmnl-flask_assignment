@@ -68,7 +68,7 @@ def edit_transaction(transaction_id):
 
 
 # Delete operation: Delete a transaction
-@app route("/delete/<int:transaction_id>")
+@app.route("/delete/<int:transaction_id>")
 def delete_transaction(transaction_id):
     # Find the transaction with the matching ID and remove it form the list
     for transaction in transactions:
