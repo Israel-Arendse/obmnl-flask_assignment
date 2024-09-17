@@ -61,7 +61,7 @@ def edit_transaction(transaction_id):
     for transaction in transactions:
         if transaction['id'] == transaction_id:
             # Render the edit form template and pass the transaction to be edited
-            return render_template("edit.hmtl", transaction=transaction)
+            return render_template("edit.html", transaction=transaction)
 
     # If the transaction with the specifed ID is not found, hanlde this case
     return {"mesage": "Transaction not found"}, 404
@@ -74,7 +74,7 @@ def delete_transaction(transaction_id):
     # Find the transaction with the matching ID and remove it form the list
     for transaction in transactions:
         if transaction['id'] == transaction_id:
-            transactions.remove(transaction) # Delete the transaction from the transactions list
+            transactions.rmove(transaction) # Delete the transaction from the transactions list
             break # Exit the loop once the transaction is found and remove.
 
     # Redirect to the transactions list page after deleting the transaction
