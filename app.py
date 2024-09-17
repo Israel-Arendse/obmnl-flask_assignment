@@ -47,6 +47,12 @@ def edit_transaction(transaction_id):
         date = request.form['date']            # Get the 'date' field value from the form
         amount = float(request.form['amount']) # Get the 'amount' field value from the form and convert it to a float
 
+        # Find the transaction with the mathcing ID and update its values
+        for transaction in transactions:
+            if transaction['id'] == transaction_id:
+                transaction['date'] = date      # Update the 'date' field of the transaction
+                transaction['amount'] = amount  # Update the 'amount' field of the transaction
+                break                           # Exit the loop once the transaction is found and updated
 
 
 
