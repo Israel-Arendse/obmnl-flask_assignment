@@ -129,7 +129,7 @@ def total_balance():
         balance_flag = True
 
     # Create a formatted string for the total balance.
-    total_balance = f"Total Balance: {balance}"
+    total_amount = f"Total Balance: {balance}"
 
     # Return an HTML template, passing three variables:
     # - 'transactions' : The list of transactions (for display).
@@ -138,7 +138,7 @@ def total_balance():
     return render_template(
         "transactions.html",
         transactions=transactions,
-        total_balance=total_balance,
+        total_amount=total_amount,
         balance_flag=balance_flag,
     )
 
