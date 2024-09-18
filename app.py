@@ -16,7 +16,7 @@ transactions = [
 def get_transactions():
     return render_template("transactions.html", transactions=transactions)
 
-# Search operation: Search transactions with a specific maximum and minimum value.
+# Search feature: Search transactions with a specific maximum and minimum value.
 # Route to handle the search and retrieval of transactions
 @app.route("/search", methods=["GET", "POST"])
 def search_transactions():
