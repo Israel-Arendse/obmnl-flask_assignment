@@ -111,6 +111,39 @@ def delete_transaction(transaction_id):
     # Redirect to the transactions list page after deleting the transaction
     return redirect(url_for("get_transactions"))
 
+# Balance feature: Calculates and displays the total balance of all transactions.
+# Route to handle the total balance of all transactions
+@app.route("/balance")
+def total_balance():
+    # Initializes the 'balance' variable to accumilate the total transaction amounts.
+    balance = 0
+
+    # Intitalizes the boolean flag 'balance_flag' which becomes True if the total balance is positive
+    balance_flag = False
+
+    # Iterate through each transaction in the 'transactions' list.
+    for transaction in transactions:
+        # Add the transaction amount to the 'balance'.
+        balance += transaction["amount"]
+
+    # Check if the total balance is positive.
+    if balance > 0:
+        balance_flag = True
+
+    # Create a formatted string for the total balance.
+    total_balance = f"Total Balance: {balance}"
+
+    # Return an HTML template, passing three variables:
+    # - 'transactions' : The list of transactions (for display).
+    # - 'total_balance' : The formattted total balance string.
+    # - 'balance_flag': Indicates whether the balance is positive
+    return render_template(
+        "transactions.html",
+        transactions=transactions,
+        total_balance=total_balance,
+        balance_flag=balance_flag,
+    )
+
 # Run the Flask app
 if __name__ == "__main__":
     app.run(debug=True)
