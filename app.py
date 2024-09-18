@@ -16,6 +16,28 @@ transactions = [
 def get_transactions():
     return render_template("transactions.html", transactions=transactions)
 
+# Search operation: Search transactions with a specific maximum and minimum value.
+# Route to handle the search and retrieval of transactions
+@app.route("/search", methods=["GET", "POST"])
+def search_transactions():
+
+    # If the request method is a POST method
+    if request.method == "POST":
+        # Convert 'min_amount' and 'max_amount' values to floating-point numbers
+        min = float(request.form["min_amount"]) 
+        max = float(request.form["max_amount"]) 
+        filtered_transactions = [
+            transaction
+            for transaction in transactions
+            if min <= transaction["amount"] <= max
+        ]
+        
+        # Returns the HTML template "transactions.hmtl"
+        return render_template("transactions.html", transactions=filtered_transactions)
+        # Returns and renders the HMTL template "search.html" as an alternative result.
+    return render_template("search.html") 
+
+
 # Create operation: Display add transaction form
 # Route to handle the creation of a new transaction
 @app.route("/add", methods=["GET", "POST"])
