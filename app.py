@@ -16,6 +16,27 @@ transactions = [
 def get_transactions():
     return render_template("transactions.html", transactions=transactions)
 
+# Search feature: Search transactions with a specific maximum and minimum value.
+# Route to handle the search and retrieval of transactions
+@app.route("/search", methods=["GET", "POST"])
+def search_transactions():
+
+    # If the request method is a POST method
+    if request.method == "POST":
+        # Convert 'min_amount' and 'max_amount' values to floating-point numbers
+        min = float(request.form["min_amount"]) 
+        max = float(request.form["max_amount"]) 
+        filtered_transactions = [
+            transaction
+            for transaction in transactions
+            if min <= transaction["amount"] <= max
+        ]
+        
+        # Returns the HTML template "transactions.hmtl"
+        return render_template("transactions.html", transactions=filtered_transactions)
+        # Returns and renders the HMTL template "search.html" as an alternative result.
+    return render_template("search.html") 
+
 # Create operation: Display add transaction form
 # Route to handle the creation of a new transaction
 @app.route("/add", methods=["GET", "POST"])
@@ -39,22 +60,22 @@ def add_transaction():
             # Redirect to the transactions list page after adding the new transaction
             return redirect(url_for("get_transactions"))
 
-        except ValueError:
-            # Handle the case where the user entered invalid numeric values
+        
+        except ValueError: # Handle the case where the user entered invalid numeric values.
             return "Please enter valid numeric values for both 'Date' and 'Amount'."
 
-    # If the request method is GET, render the form template to display the add transaction form
+    # If the request method is GET, render the form template to display the add transaction form.
     return render_template("form.html")
 
-# Update operation: Display edit transaction form
-# Route to handle the editing of an existing transaction
+# Update operation: Display edit transaction form.
+# Route to handle the editing of an existing transaction.
 @app.route("/edit/<int:transaction_id>", methods=["GET", "POST"])
 def edit_transaction(transaction_id):
     # Check if the request method is POST (form submission)
     if request.method == 'POST':
-        # Extract the updated values from the form fields
-        date = request.form['date']            # Get the 'date' field value from the form
-        amount = int(request.form['amount']) # Get the 'amount' field value from the form and convert it to a float
+        # Extract the updated values from the form fields.
+        date = request.form['date']          # - Get the 'date' field value from the form
+        amount = int(request.form['amount']) # - Get the 'amount' field value from the form and convert it to a float
 
         # Find the transaction with the mathcing ID and update its values
         for transaction in transactions:
@@ -75,7 +96,6 @@ def edit_transaction(transaction_id):
     # If the transaction with the specifed ID is not found, hanlde this case
     return {"mesage": "Transaction not found"}, 404
 
-
 # Delete operation: Delete a transaction
 # Route to handle the deletion of an existing transaction
 @app.route("/delete/<int:transaction_id>")
@@ -88,6 +108,39 @@ def delete_transaction(transaction_id):
 
     # Redirect to the transactions list page after deleting the transaction
     return redirect(url_for("get_transactions"))
+
+# Balance feature: Calculates and displays the total balance of all transactions.
+# Route to handle the total balance of all transactions
+@app.route("/balance")
+def total_balance():
+    # Initializes the 'balance' variable to accumilate the total transaction amounts.
+    balance = 0
+
+    # Intitalizes the boolean flag 'balance_flag' which becomes True if the total balance is positive
+    balance_flag = False
+
+    # Iterate through each transaction in the 'transactions' list.
+    for transaction in transactions:
+        # Add the transaction amount to the 'balance'.
+        balance += transaction["amount"]
+
+    # Check if the total balance is positive.
+    if balance > 0:
+        balance_flag = True
+
+    # Create a formatted string for the total balance.
+    total_amount = f"Total Balance: {balance}"
+
+    # Return an HTML template, passing three variables:
+    # - 'transactions' : The list of transactions (for display).
+    # - 'total_balance' : The formatted total balance string.
+    # - 'balance_flag': Indicates whether the balance is positive
+    return render_template(
+        "transactions.html",
+        transactions=transactions,
+        total_amount=total_amount,
+        balance_flag=balance_flag,
+    )
 
 # Run the Flask app
 if __name__ == "__main__":
